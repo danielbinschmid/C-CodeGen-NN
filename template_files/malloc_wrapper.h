@@ -5,7 +5,7 @@
  * Wrapper for TVMBackendAllocWorkspace of TVM runtime. Calls malloc.
 */
 void*  TVMBackendAllocWorkspace(int arg0, int arg1, uint64_t size, int arg3, int arg4) {
-    malloc(size);
+    return malloc(size);
 }
 
 /**
