@@ -146,3 +146,4 @@ poetry.lock
 # Other
 .pkl_memoize_py3
 tmp
+out_*
