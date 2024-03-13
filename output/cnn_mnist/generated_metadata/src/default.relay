@@ -1,0 +1,16 @@
+def @main(%Input3: Tensor[(1, 1, 28, 28), float32] /* ty=Tensor[(1, 1, 28, 28), float32] */) -> Tensor[(1, 10), float32] {
+  %0 = nn.pad(%Input3, 0f /* ty=float32 */, pad_width=[[0i64, 0i64], [0i64, 0i64], [2i64, 2i64], [2i64, 2i64]]) /* ty=Tensor[(1, 1, 32, 32), float32] */;
+  %1 = nn.conv2d(%0, meta[relay.Constant][0] /* ty=Tensor[(8, 1, 5, 5), float32] */, padding=[0, 0, 0, 0], channels=8, kernel_size=[5, 5]) /* ty=Tensor[(1, 8, 28, 28), float32] */;
+  %2 = add(%1, meta[relay.Constant][1] /* ty=Tensor[(8, 1, 1), float32] */) /* ty=Tensor[(1, 8, 28, 28), float32] */;
+  %3 = nn.relu(%2) /* ty=Tensor[(1, 8, 28, 28), float32] */;
+  %4 = nn.max_pool2d(%3, pool_size=[2, 2], strides=[2, 2], padding=[0, 0, 0, 0]) /* ty=Tensor[(1, 8, 14, 14), float32] */;
+  %5 = nn.pad(%4, 0f /* ty=float32 */, pad_width=[[0i64, 0i64], [0i64, 0i64], [2i64, 2i64], [2i64, 2i64]]) /* ty=Tensor[(1, 8, 18, 18), float32] */;
+  %6 = nn.conv2d(%5, meta[relay.Constant][2] /* ty=Tensor[(16, 8, 5, 5), float32] */, padding=[0, 0, 0, 0], channels=16, kernel_size=[5, 5]) /* ty=Tensor[(1, 16, 14, 14), float32] */;
+  %7 = add(%6, meta[relay.Constant][3] /* ty=Tensor[(16, 1, 1), float32] */) /* ty=Tensor[(1, 16, 14, 14), float32] */;
+  %8 = nn.relu(%7) /* ty=Tensor[(1, 16, 14, 14), float32] */;
+  %9 = nn.max_pool2d(%8, pool_size=[3, 3], strides=[3, 3], padding=[0, 0, 0, 0]) /* ty=Tensor[(1, 16, 4, 4), float32] */;
+  %10 = reshape(%9, newshape=[1, 256]) /* ty=Tensor[(1, 256), float32] */;
+  %11 = nn.dense(%10, meta[relay.Constant][4] /* ty=Tensor[(10, 256), float32] */, units=None, out_dtype="float32") /* ty=Tensor[(1, 10), float32] */;
+  add(%11, meta[relay.Constant][5] /* ty=Tensor[(1, 10), float32] */) /* ty=Tensor[(1, 10), float32] */
+}
+

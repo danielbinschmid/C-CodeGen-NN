@@ -41,5 +41,7 @@ $ cd <build_dir>
 $ ./executable
 ```
 
-### Note
-Most of the steps work with multiple input and output arguments of the neural network but not all. For multiple inputs and outputs, the scripts need to be adjusted.
+### Notes
+
+- Most of the steps work with multiple input and output arguments of the neural network but not all. For multiple inputs and outputs, the scripts need to be adjusted.
+- An example output can be found in [output/cnn_mnist](./output/cnn_mnist/) for a basic CNN.
