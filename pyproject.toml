@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "C-CodeGenNN"
+version = "0.0.0"
+description = "Generating dependency-free C code."
+authors = ["Daniel Bin Schmid <danielbinschmid@outlook.de>"]
+license = "MIT"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.9"
+apache-tvm = "0.11.1"
+onnx = "1.14.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
