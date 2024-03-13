@@ -1,0 +1,36 @@
+TRIPLE ?= riscv64-unknown-elf
+PREFIX ?= $(TRIPLE)-
+CC = ${PREFIX}gcc
+
+
+SOURCE_DIR := src
+BUILD_DIR := build_riscv
+INCLUDE_DIR := include
+
+ifeq (${VERBOSE}, 1)
+QUIET ?=
+else
+QUIET ?= @
+endif
+
+
+SRC_FILES := $(wildcard $(SOURCE_DIR)/*.c)
+HEADER_FILES := $(wildcard $(INCLUDE_DIR)/*.h)
+OBJ_FILES := $(patsubst $(SOURCE_DIR)/%.c, $(BUILD_DIR)/src/%.o, $(SRC_FILES))
+
+
+$(info Source files: $(SRC_FILES))
+$(info Header files: $(HEADER_FILES))
+$(info Object files: $(OBJ_FILES))
+
+.DEFAULT_GOAL := all
+
+
+$(BUILD_DIR)/src/%.o: $(SOURCE_DIR)/%.c $(HEADER_FILES)
+	${QUIET}mkdir -p $(dir $@)
+	${CC} -fno-common -fno-builtin-printf -specs=htif_nano.specs -c -o $@ $< -I$(INCLUDE_DIR) -fPIC
+
+$(BUILD_DIR)/executable: $(OBJ_FILES)
+	${CC} -static -specs=htif_nano.specs -o $@ $^ -lm -fPIC
+
+all: $(BUILD_DIR)/executable
