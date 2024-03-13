@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define MAX 100
-// #define LOGGING 1
+#define LOGGING 1
 
 int main(int argc, char** argv) {
 #ifdef LOGGING
